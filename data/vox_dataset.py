@@ -5,7 +5,6 @@ import collections
 import numpy as np
 from PIL import Image
 from io import BytesIO
-from scipy.io import loadmat
 
 import torch
 from torch.utils.data import Dataset
