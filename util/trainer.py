@@ -7,6 +7,7 @@ import torch.nn as nn
 from torch.optim import Adam, lr_scheduler
 
 from util.distributed import master_only_print as print
+from util.init_weight import weights_init
 
 def accumulate(model1, model2, decay=0.999):
     par1 = dict(model1.named_parameters())
@@ -43,11 +44,19 @@ def get_model_optimizer_and_scheduler(opt):
     lib = importlib.import_module(gen_module)
     network = getattr(lib, gen_network_name)
     net_G = network(**opt.gen.param).to(opt.device)
+    init_bias = getattr(opt.trainer.init, 'bias', None)
+    net_G.apply(weights_init(
+        opt.trainer.init.type, opt.trainer.init.gain, init_bias))
+
     net_G_ema = network(**opt.gen.param).to(opt.device)
     net_G_ema.eval()
     accumulate(net_G_ema, net_G, 0)
     print('net [{}] parameter count: {:,}'.format(
         'net_G', _calculate_model_size(net_G)))
+    print('Initialize net_G weights using '
+          'type: {} gain: {}'.format(opt.trainer.init.type,
+                                     opt.trainer.init.gain))
+
 
     opt_G = get_optimizer(opt.gen_optimizer, net_G)
 

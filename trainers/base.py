@@ -88,7 +88,8 @@ class BaseTrainer(object):
         # Initialize tensorboard and hparams.
         self._init_tensorboard()
         self._init_hparams()
-        # self.lpips = LPIPS()
+        self.lpips = LPIPS()
+        self.best_lpips = None
 
     def _init_tensorboard(self):
         r"""Initialize the tensorboard. Different algorithms might require
@@ -97,13 +98,17 @@ class BaseTrainer(object):
         """
         # Logging frequency: self.opt.logging_iter
         self.meters = {}
-        names = ['optim/gen_lr', 'time/iteration', 'time/epoch']
+        names = ['optim/gen_lr', 'time/iteration', 'time/epoch', 
+                 'metric/best_lpips', 'metric/lpips']
         for name in names:
             self.meters[name] = Meter(name)
+
         # Logging frequency: self.opt.image_display_iter
         self.image_meter = Meter('images')
+
         # Logging frequency: self.opt.snapshot_save_iter
-        self.metric_meters = Meter('metric/lpips')
+        # self.meters['metric/lpips'] = Meter('metric/lpips')
+
 
     def _init_hparams(self):
         r"""Initialize a dictionary of hyperparameters that we want to monitor
@@ -151,11 +156,11 @@ class BaseTrainer(object):
             self.optimize_parameters(data)
             current_iteration += 1
             self.end_of_iteration(data, current_epoch, current_iteration)
-
             
         self.save_image(self._get_save_path('image', 'jpg'), data)
         self._write_tensorboard()
         self._print_current_errors()
+        self.write_metrics(data)
         self.end_of_epoch(data, val_dataset, current_epoch, current_iteration)
         print('End debugging')
         
@@ -330,7 +335,7 @@ class BaseTrainer(object):
                 current_iteration % self.opt.snapshot_save_iter == 0:
             self.save_image(self._get_save_path('image', 'jpg'), data)
             self.save_checkpoint(current_epoch, current_iteration)
-            self.write_metrics()
+            self.write_metrics(data)
         # Compute image to be saved.
         elif current_iteration % self.opt.image_save_iter == 0:
             self.save_image(self._get_save_path('image', 'jpg'), data)
@@ -379,7 +384,7 @@ class BaseTrainer(object):
                 current_epoch % self.opt.snapshot_save_epoch == 0:
             self.save_image(self._get_save_path('image', 'jpg'), data)
             self.save_checkpoint(current_epoch, current_iteration)
-            self.write_metrics()
+            self.write_metrics(data)
         if self.current_epoch % self.opt.eval_epoch == 0 and self.current_epoch >= self.opt.start_eval_epoch:
             self.eval(val_dataset)
         
@@ -434,19 +439,19 @@ class BaseTrainer(object):
                 self.image_meter.write_image(image_grid, self.current_iteration)
             torchvision.utils.save_image(image_grid, path, nrow=1)
 
-    def write_metrics(self):
+    def write_metrics(self, data):
         r"""Write metrics to the tensorboard."""
-        cur_metrics = self._compute_metrics()
+        cur_metrics = self._compute_metrics(data, self.current_iteration)
         if cur_metrics is not None:
             if self.best_lpips is not None:
                 self.best_lpips = min(self.best_lpips, cur_metrics['lpips'])
             else:
                 self.best_lpips = cur_metrics['lpips']
             metric_dict = {
-                'lpips': cur_metrics['lpips'], 'best_lpips': self.best_fid
+                'metric/lpips': cur_metrics['lpips'], 'metric/best_lpips': self.best_lpips
                 }
-            self._write_to_meters(metric_dict, self.metric_meters)
-            self._flush_meters(self.metric_meters)
+            self._write_to_meters(metric_dict, self.meters)
+            self._flush_meters(self.meters)
             if self.opt.trainer.hparam_to_tensorboard:
                 add_hparams(self.hparam_dict, metric_dict)
 

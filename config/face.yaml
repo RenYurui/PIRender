@@ -5,10 +5,10 @@
 
 distributed: True
 image_to_tensorboard: True
-snapshot_save_iter: 20000
-snapshot_save_epoch: 4
-snapshot_save_start_iter: 10000
-snapshot_save_start_epoch: 3
+snapshot_save_iter: 40000
+snapshot_save_epoch: 20
+snapshot_save_start_iter: 20000
+snapshot_save_start_epoch: 10
 image_save_iter: 1000
 max_epoch: 200
 logging_iter: 100
@@ -20,10 +20,10 @@ gen_optimizer:
     adam_beta1: 0.5
     adam_beta2: 0.999
     lr_policy:
-        iteration_mode: False
+        iteration_mode: True
         type: step
-        step_size: 1000000
-        gamma: 1
+        step_size: 300000
+        gamma: 0.2
 
 trainer:
     type: trainers.face_trainer::FaceTrainer
@@ -42,7 +42,9 @@ trainer:
       use_style_loss: True
       num_scales: 4      
       style_to_perceptual: 250
-
+    init:
+      type: 'normal'
+      gain: 0.02
 gen:
     type: generators.face_model::FaceGenerator
     param:
@@ -72,7 +74,7 @@ data:
     resolution: 256
     semantic_radius: 13
     train:
-      batch_size: 2
+      batch_size: 5
       distributed: True
     val:
       batch_size: 8
