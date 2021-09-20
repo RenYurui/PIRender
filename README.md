@@ -33,16 +33,13 @@ The proposed **PIRenderer** can synthesis portrait images by intuitively control
   </p>
   
   
-  
 * **Motion Imitation**
 
-  <p align='center'>  
     <img src='https://renyurui.github.io/PIRender_web/reenactment_fast.gif' width='700'/>
   </p>
   <p align='center'>  
     <b>Same & Corss-identity Reenactment</b> 
   </p>
-  
   
 * **Audio-Driven Facial Reenactment**
 
@@ -76,7 +73,7 @@ Coming soon
 
 #### Conda Installation
 
-``` shell
+```bash
 # 1. Create a conda virtual environment.
 conda create -n PIRenderer python=3.6
 conda activate PIRenderer
@@ -93,7 +90,7 @@ We train our model using the [VoxCeleb](https://arxiv.org/abs/1706.08612). You c
 
 You can download the demo dataset with the following code:
 
-``` bash
+```bash
 ./download_dataset.sh
 ```
 
@@ -105,7 +102,7 @@ You can download the demo dataset with the following code:
 
 3. We save the video and 3DMM parameters in a lmdb file. Please run the following code to do this 
 
-   ``` bash
+   ```bash
    python util.write_data_to_lmdb.py
    ```
 
@@ -116,17 +113,17 @@ You can download the demo dataset with the following code:
 
 The trained weights can be downloaded by running the following code:
 
-``` bash
+```bash
 ./download_weights.sh
 ```
 
 Or you can choose to download the resources with these links: coming soon. Then save the files to `./result/face`
 
-##### Reenactment 
+**Reenactment**
 
 Run the the demo for face reenactment:
 
-``` bash
+```bash
 python -m torch.distributed.launch --nproc_per_node=1 --master_port 12345 inference.py \
 --config ./config/face.yaml \
 --name face \
@@ -136,7 +133,7 @@ python -m torch.distributed.launch --nproc_per_node=1 --master_port 12345 infere
 
 The output results are saved at `./vox_result/face_reenactment`
 
-##### Intuitive Control
+**Intuitive Control**
 
 coming soon
 
@@ -144,7 +141,7 @@ coming soon
 
 Our model can be trained with the following code
 
-``` bash
+```bash
 python -m torch.distributed.launch --nproc_per_node=4 --master_port 12345 train.py \
 --config ./config/face.yaml \
 --name face
@@ -155,7 +152,7 @@ python -m torch.distributed.launch --nproc_per_node=4 --master_port 12345 train.
 
 If you find this code is helpful, please cite our paper
 
-``` tex
+```tex
 @misc{ren2021pirenderer,
       title={PIRenderer: Controllable Portrait Image Generation via Semantic Neural Rendering}, 
       author={Yurui Ren and Ge Li and Yuanqi Chen and Thomas H. Li and Shan Liu},
