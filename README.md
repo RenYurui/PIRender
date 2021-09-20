@@ -95,6 +95,12 @@ The demo dataset contains all 514 test videos. You can download the dataset with
 ./scripts/download_demo_dataset.sh
 ```
 
+Or you can choose to download the resources with these links: 
+
+​	[Google Driven &](https://drive.google.com/drive/folders/16Yn2r46b4cV6ZozOH6a8SdFz_iG7BQk1?usp=sharing) [BaiDu Driven](https://pan.baidu.com/s/1e615bBHvM4Wz-2snk-86Xw) with extraction passwords ”p9ab“
+
+Then unzip and save the files to `./dataset`
+
 #### Prepare the dataset
 
 1. The dataset is preprocessed follow the method used in [First-Order](https://github.com/AliaksandrSiarohin/video-preprocessing). You can follow the instructions in their repo to download and crop videos for training and testing.
