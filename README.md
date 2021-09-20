@@ -15,7 +15,7 @@
 
 The source code of the ICCV2021 paper "[PIRenderer: Controllable Portrait Image Generation via Semantic Neural Rendering](https://arxiv.org/abs/2109.08379)" (ICCV2021)
 
-The proposed **PIRenderer** can synthesis portrait images by intuitively controlling the face motions with fully disentangled 3DMM parameters. This model can be applied :
+The proposed **PIRenderer** can synthesis portrait images by intuitively controlling the face motions with fully disentangled 3DMM parameters. This model can be applied to tasks such as:
 
 * **Intuitive Portrait Image Editing**
 
@@ -77,8 +77,9 @@ Coming soon
 # 1. Create a conda virtual environment.
 conda create -n PIRenderer python=3.6
 conda activate PIRenderer
+conda install -c pytorch pytorch=1.7.1 torchvision cudatoolkit=10.2
 
-# 2. Install dependency
+# 2. Install other dependencies
 pip install -r requirements.txt
 ```
 
@@ -88,10 +89,10 @@ We train our model using the [VoxCeleb](https://arxiv.org/abs/1706.08612). You c
 
 #### Download the demo dataset
 
-You can download the demo dataset with the following code:
+The demo dataset contains all 514 test videos. You can download the dataset with the following code:
 
 ```bash
-./download_dataset.sh
+./scripts/download_demo_dataset.sh
 ```
 
 #### Prepare the dataset
@@ -100,11 +101,39 @@ You can download the demo dataset with the following code:
 
 2. After obtaining the VoxCeleb videos, we extract 3DMM parameters using [Deep3DFaceReconstruction](https://github.com/microsoft/Deep3DFaceReconstruction). 
 
+   The folder are with format as:
+
+   ```
+   ${DATASET_ROOT_FOLDER}
+   └───path_to_videos
+   		└───train
+   				└───xxx.mp4
+   				└───xxx.mp4
+   				...
+   		└───test
+   				└───xxx.mp4
+   				└───xxx.mp4
+   				...
+   └───path_to_3dmm_coeff
+   		└───train
+   				└───xxx.mat
+   				└───xxx.mat
+   				...
+   		└───test
+   				└───xxx.mat
+   				└───xxx.mat
+   				...
+   ```
+
 3. We save the video and 3DMM parameters in a lmdb file. Please run the following code to do this 
 
    ```bash
-   python util.write_data_to_lmdb.py
+   python scripts/prepare_vox_lmdb.py \
+   --path path_to_videos \
+   --coeff_3dmm_path path_to_3dmm_coeff \
+   --out path_to_output_dir
    ```
+
 
 
 ### 3). Training and Inference
@@ -114,7 +143,7 @@ You can download the demo dataset with the following code:
 The trained weights can be downloaded by running the following code:
 
 ```bash
-./download_weights.sh
+./scripts/download_weights.sh
 ```
 
 Or you can choose to download the resources with these links: coming soon. Then save the files to `./result/face`
