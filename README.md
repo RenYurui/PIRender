@@ -9,6 +9,8 @@
     <a href="https://youtu.be/gDhcRcPI1JU">Video</a>
   </b>
 </p> 
+
+
 # PIRenderer
 
 The source code of the ICCV2021 paper "[PIRenderer: Controllable Portrait Image Generation via Semantic Neural Rendering](https://arxiv.org/abs/2109.08379)" (ICCV2021)
@@ -27,8 +29,9 @@ The proposed **PIRenderer** can synthesis portrait images by intuitively control
     <img src='https://renyurui.github.io/PIRender_web/intuitive_editing_fast.gif' width='700'/>
   </p>
   <p align='center'>  
-    <b>Pose&Expression Alignment</b> 
+    <b>Pose & Expression Alignment</b> 
   </p>
+  
   
   
 * **Motion Imitation**
@@ -37,7 +40,7 @@ The proposed **PIRenderer** can synthesis portrait images by intuitively control
     <img src='https://renyurui.github.io/PIRender_web/reenactment_fast.gif' width='700'/>
   </p>
   <p align='center'>  
-    <b>Same&Corss-identity Reenactment</b> 
+    <b>Same & Corss-identity Reenactment</b> 
   </p>
   
   
@@ -59,7 +62,6 @@ The proposed **PIRenderer** can synthesis portrait images by intuitively control
 ## Colab Demo
 
 Coming soon
-
 
 
 ## Get Start
