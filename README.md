@@ -34,8 +34,8 @@ The proposed **PIRenderer** can synthesis portrait images by intuitively control
   
   
 * **Motion Imitation**
-
-    <img src='https://renyurui.github.io/PIRender_web/reenactment_fast.gif' width='700'/>
+  <p align='center'> 
+    <img src='https://user-images.githubusercontent.com/30292465/133969233-d7ce0c02-ce6a-4cef-bc5e-d8f55b709f81.gif' width='700'/>
   </p>
   <p align='center'>  
     <b>Same & Corss-identity Reenactment</b> 
