@@ -112,25 +112,24 @@ Then unzip and save the files to `./dataset`
    ```
    ${DATASET_ROOT_FOLDER}
    └───path_to_videos
-   		└───train
-   				└───xxx.mp4
-   				└───xxx.mp4
-   				...
-   		└───test
-   				└───xxx.mp4
-   				└───xxx.mp4
-   				...
+       └───train
+           └───xxx.mp4
+           └───xxx.mp4
+           ...
+       └───test
+           └───xxx.mp4
+           └───xxx.mp4
+           ...
    └───path_to_3dmm_coeff
-   		└───train
-   				└───xxx.mat
-   				└───xxx.mat
-   				...
-   		└───test
-   				└───xxx.mat
-   				└───xxx.mat
-   				...
+       └───train
+           └───xxx.mat
+           └───xxx.mat
+           ...
+       └───test
+           └───xxx.mat
+           └───xxx.mat
+           ...
    ```
-
 3. We save the video and 3DMM parameters in a lmdb file. Please run the following code to do this 
 
    ```bash
@@ -152,7 +151,11 @@ The trained weights can be downloaded by running the following code:
 ./scripts/download_weights.sh
 ```
 
-Or you can choose to download the resources with these links: coming soon. Then save the files to `./result/face`
+Or you can choose to download the resources with these links: 
+
+[Google Driven](https://drive.google.com/file/d/1-0xOf6g58OmtKtEWJlU3VlnfRqPN9Uq7/view?usp=sharing) & [Baidu Driven](https://pan.baidu.com/s/18B3xfKMXnm4tOqlFSB8ntg) with extraction passwards "4sy1".
+
+Then unzip and save the files to `./result/face`.
 
 **Reenactment**
 
@@ -160,7 +163,7 @@ Run the the demo for face reenactment:
 
 ```bash
 python -m torch.distributed.launch --nproc_per_node=1 --master_port 12345 inference.py \
---config ./config/face.yaml \
+--config ./config/face_demo.yaml \
 --name face \
 --no_resume \
 --output_dir ./vox_result/face_reenactment

@@ -32,6 +32,7 @@ def parse_args():
     parser.add_argument('--single_gpu', action='store_true')
     parser.add_argument('--output_dir', type=str)
 
+
     args = parser.parse_args()
     return args
 
@@ -67,7 +68,6 @@ if __name__ == '__main__':
         init_dist(opt.local_rank)    
         opt.device = torch.cuda.current_device()
     # create a visualizer
-    # date_uid, logdir = init_logging(opt)
     date_uid, logdir = init_logging(opt)
     opt.logdir = logdir
     make_logging_dir(logdir, date_uid)
