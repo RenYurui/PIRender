@@ -97,7 +97,7 @@ The demo dataset contains all 514 test videos. You can download the dataset with
 
 Or you can choose to download the resources with these links: 
 
-​	[Google Driven &](https://drive.google.com/drive/folders/16Yn2r46b4cV6ZozOH6a8SdFz_iG7BQk1?usp=sharing) [BaiDu Driven](https://pan.baidu.com/s/1e615bBHvM4Wz-2snk-86Xw) with extraction passwords ”p9ab“
+​	[Google Driven](https://drive.google.com/drive/folders/16Yn2r46b4cV6ZozOH6a8SdFz_iG7BQk1?usp=sharing) & [BaiDu Driven](https://pan.baidu.com/s/1e615bBHvM4Wz-2snk-86Xw) with extraction passwords ”p9ab“
 
 Then unzip and save the files to `./dataset`
 
@@ -130,6 +130,9 @@ Then unzip and save the files to `./dataset`
            └───xxx.mat
            ...
    ```
+   
+   **News**: We provide Scripts for extracting 3dmm coeffs from videos. Please check the [DatasetHelper](./DatasetHelper.md) for more details.
+   
 3. We save the video and 3DMM parameters in a lmdb file. Please run the following code to do this 
 
    ```bash
