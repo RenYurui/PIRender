@@ -1,0 +1,3 @@
+[submodule "Deep3DFaceRecon_pytorch"]
+	path = Deep3DFaceRecon_pytorch
+	url = https://github.com/sicxu/Deep3DFaceRecon_pytorch
