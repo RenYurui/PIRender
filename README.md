@@ -142,8 +142,6 @@ Then unzip and save the files to `./dataset`
    --out path_to_output_dir
    ```
 
-
-
 ### 3). Training and Inference
 
 #### Inference
@@ -162,21 +160,60 @@ Then unzip and save the files to `./result/face`.
 
 **Reenactment**
 
-Run the the demo for face reenactment:
+Run the demo for face reenactment:
 
 ```bash
+# same identity
 python -m torch.distributed.launch --nproc_per_node=1 --master_port 12345 inference.py \
 --config ./config/face_demo.yaml \
 --name face \
 --no_resume \
 --output_dir ./vox_result/face_reenactment
+
+# cross identity
+python -m torch.distributed.launch --nproc_per_node=1 --master_port 12345 inference.py \
+--config ./config/face_demo.yaml \
+--name face \
+--no_resume \
+--output_dir ./vox_result/face_reenactment_cross \
+--cross_id
 ```
 
-The output results are saved at `./vox_result/face_reenactment`
+The output results are saved at `./vox_result/face_reenactment` and `./vox_result/face_reenactment_cross`
 
 **Intuitive Control**
 
-coming soon
+Our model can generate results by providing intuitive controlling coefficients. 
+We provide the following code for this task. Please note that you need to build the environment of [DeepFaceRecon](https://github.com/sicxu/Deep3DFaceRecon_pytorch/tree/73d491102af6731bded9ae6b3cc7466c3b2e9e48) first.
+
+```bash
+# 1. Copy the provided scrips to the folder `Deep3DFaceRecon_pytorch`.
+cp scripts/face_recon_videos.py ./Deep3DFaceRecon_pytorch
+cp scripts/extract_kp_videos.py ./Deep3DFaceRecon_pytorch
+cp scripts/coeff_detector.py ./Deep3DFaceRecon_pytorch
+cp scripts/inference_options.py ./Deep3DFaceRecon_pytorch/options
+
+cd Deep3DFaceRecon_pytorch
+
+# 2. Extracte the 3dmm coefficients of the demo images.
+python coeff_detector.py \
+--input_dir ../demo_images \
+--keypoint_dir ../demo_images \
+--output_dir ../demo_images \
+--name=model_name \
+--epoch=20 \
+--model facerecon   
+
+# 3. control the source image with our model
+cd ..
+python -m torch.distributed.launch --nproc_per_node=1 --master_port 12345 intuitive_control.py \
+--config ./config/face_demo.yaml \
+--name face \
+--no_resume \
+--output_dir ./vox_result/face_intuitive \
+--input_name ./demo_images
+```
+
 
 #### Train
 

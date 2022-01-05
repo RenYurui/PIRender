@@ -26,6 +26,7 @@ def parse_args():
     parser.add_argument('--checkpoints_dir', default='result',
                         help='Dir for saving logs and models.')
     parser.add_argument('--seed', type=int, default=0, help='Random seed.')
+    parser.add_argument('--cross_id', action='store_true')
     parser.add_argument('--which_iter', type=int, default=None)
     parser.add_argument('--no_resume', action='store_true')
     parser.add_argument('--local_rank', type=int, default=0)
@@ -88,6 +89,7 @@ if __name__ == '__main__':
         'epoch_{:05}_iteration_{:09}'.format(current_epoch, current_iteration)
         )
     os.makedirs(output_dir, exist_ok=True)
+    opt.data.cross_id = args.cross_id
     dataset = VoxVideoDataset(opt.data, is_inference=True)
     with torch.no_grad():
         for video_index in range(dataset.__len__()):

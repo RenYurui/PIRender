@@ -2,14 +2,17 @@
 
 We provide scripts for extracting 3dmm coefficients for videos by using [DeepFaceRecon_pytorch](https://github.com/sicxu/Deep3DFaceRecon_pytorch/tree/73d491102af6731bded9ae6b3cc7466c3b2e9e48).
 
-1. Follow the instructions of their repo to build the environment of DeepFace.
+1. Follow the instructions of their repo to build the environment of DeepFaceRecon.
 
-2. Copy the  provided scrips to the folder `Deep3DFaceRecon_pytorch`.
+2. Copy the provided scrips to the folder `Deep3DFaceRecon_pytorch`.
 
    ```bash
-   cp scripts/face_recon_images.py ./Deep3DFaceRecon_pytorch
    cp scripts/face_recon_videos.py ./Deep3DFaceRecon_pytorch
+   cp scripts/extract_kp_videos.py ./Deep3DFaceRecon_pytorch
+   cp scripts/coeff_detector.py ./Deep3DFaceRecon_pytorch
    cp scripts/inference_options.py ./Deep3DFaceRecon_pytorch/options
+
+   cd Deep3DFaceRecon_pytorch
    ```
 
 3. Extract facial landmarks from videos.

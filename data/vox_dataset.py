@@ -119,7 +119,7 @@ class VoxDataset(Dataset):
         angles = coeff_3dmm[:,224:227] #euler angles for pose
         # gamma = coeff_3dmm[:,227:254] #lighting
         translation = coeff_3dmm[:,254:257] #translation
-        crop = coeff_3dmm[:,257:300] #crop param
+        crop = coeff_3dmm[:,257:260] #crop param
 
         coeff_3dmm = np.concatenate([ex_coeff, angles, translation, crop], 1)
         return torch.Tensor(coeff_3dmm).permute(1,0)
